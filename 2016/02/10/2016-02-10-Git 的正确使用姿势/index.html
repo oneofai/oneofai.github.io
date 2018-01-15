@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon180*180.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32*32.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16*16.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ONEOFAI, iOS, iOS开发" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="YG's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="纯属处理, 已让律师捏造">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://oneofai.com/about/index.html">
+<meta property="og:site_name" content="YG&#39;s Blog">
+<meta property="og:description" content="纯属处理, 已让律师捏造">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-15T16:45:59.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于我">
+<meta name="twitter:description" content="纯属处理, 已让律师捏造">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://oneofai.com/about/"/>
+
+
+
+
+
+  <title>Git 的正确提交姿势 | YG's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YG's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oneofai.com/2016/02/10/2016-02-10-Git 的正确使用姿势/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ONEOFAI">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YG's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Git 的正确提交姿势</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-02-10T02:01:21+08:00">2016-02-10</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/02/10/2016-02-10-Git 的正确使用姿势/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/02/10/2016-02-10-Git 的正确使用姿势/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Git 每次提交代码, 都要写 Commit message (提交说明), 否则就不允许提交<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"hello world"</span></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt; </span><br><span class="line"></span><br><span class="line">上面的命令的`-m`参数, 就是用来指定 commit message 的, 如果一行不够, 可以先 git commit   </span><br><span class="line">```bash</span><br><span class="line">$ git commit</span><br><span class="line">```    </span><br><span class="line">这时会跳出文本编译器, 让你写多行   </span><br><span class="line">![](https://ww2.sinaimg.cn/large/006tNc79ly1feb6kx793yj30z00qudj5.jpg)</span><br><span class="line"></span><br><span class="line">基本上, commit 信息写什么都行, 例如 ([Commit Logs From Last Night](http://www.commitlogsfromlastnight.com/), [Funny initial git commit messages](http://blog.no-panic.at/2014/10/20/funny-initial-git-commit-messages/) 以及 [fixed errors <span class="keyword">in</span> the previous commit](http://whatthecommit.com/))   </span><br><span class="line"></span><br><span class="line">![](https://ww3.sinaimg.cn/large/006tNc79ly1feb3kz970dj30wk0icacg.jpg)</span><br><span class="line"></span><br><span class="line">但是, 一般来说, commit message 应该清晰明了, 说明本次提交的目的   </span><br><span class="line"></span><br><span class="line">![](https://ww1.sinaimg.cn/large/006tNc79ly1feb7kxw0w7j31380ws7aq.jpg)  </span><br><span class="line"></span><br><span class="line">目前, 社区有多种 Commit message 的[写法规范](https://github.com/ajoslin/conventional-changelog/blob/master/conventions), 此次介绍[Angular 规范](https://gist.github.com/stephenparish/9941e89d80e2bc58a153) ( 见上图 ), 这是目前使用最广的写法, 比较合理和系统化, 并且有配套的工具   </span><br><span class="line"></span><br><span class="line"><span class="comment">### 一、Commit message 的作用   </span></span><br><span class="line">格式化的 Commit message, 有几个好处:   </span><br><span class="line">**1. 提供更多的历史信息，方便快速浏览**   </span><br><span class="line">比如, 下面的命令显示上次发布后的变动, 每个 commit 占据一行. 你只看行首, 就知道某次 commit 的目的</span><br><span class="line">```bash</span><br><span class="line">$ git <span class="built_in">log</span> &lt;last tag&gt; HEAD --pretty=format:%s</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1feb3zu0j8lj30zi0pydmy.jpg" alt=""></p>
+<p><strong>2. 可以过滤某些 commit (比如文档改动), 便于快速查找信息</strong><br>比如, 下面的命令仅仅显示本次发布新增加的功能<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> &lt;last release&gt; HEAD --grep feature</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 可以直接从 commit 生成 Change log</strong><br>Change Log 是发布新版本时, 用来说明与上一个版本差异的文档, <a href="#changelog">详见后文</a>   </p>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79ly1feb7o6lq0wj315o0h8gov.jpg" alt=""></p>
+<h3 id="二、Commit-message-的格式"><a href="#二、Commit-message-的格式" class="headerlink" title="二、Commit message 的格式"></a>二、Commit message 的格式</h3><p>每次提交, Commit message 都包括三个部分：<code>Header</code>, <code>Body</code> 和 <code>Footer</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">type</span>&gt;(&lt;scope&gt;): &lt;subject&gt;// 空一行&lt;body&gt;// 空一行&lt;footer&gt;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">其中, Header 是必需的, Body 和 Footer 可以省略不管是哪一个部分, 任何一行都不得超过72个字符( 或100个字符 ), 这是为了避免自动换行影响美观   </span><br><span class="line"></span><br><span class="line"><span class="comment">#### 1. Header</span></span><br><span class="line">Header 部分只有一行, 包括三个字段：`<span class="built_in">type</span>`(必需)、`scope`(可选) 和`subject`(必需)   </span><br><span class="line"></span><br><span class="line">**1.1 <span class="built_in">type</span>**   </span><br><span class="line"><span class="built_in">type</span> 用于说明 commit 的类别, 只允许使用下面7个标识</span><br><span class="line"></span><br><span class="line">- feat: 新功能(feature)</span><br><span class="line">- fix: 修补bug</span><br><span class="line">- docs: 文档(documentation)</span><br><span class="line">- style: 格式(不影响代码运行的变动)</span><br><span class="line">- refactor: 重构(即不是新增功能, 也不是修改bug的代码变动)</span><br><span class="line">- <span class="built_in">test</span>: 增加测试</span><br><span class="line">- chore: 构建过程或辅助工具的变动</span><br><span class="line"></span><br><span class="line">如果`<span class="built_in">type</span>`为`feat`和`fix`, 则该 commit 将肯定出现在 `Change <span class="built_in">log</span>` 之中. 其他情况(docs、chore、style、refactor、<span class="built_in">test</span>)由你决定, 要不要放入 Change <span class="built_in">log</span>，建议是不要</span><br><span class="line"></span><br><span class="line">**1.2.scope**   </span><br><span class="line">scope 用于说明 commit 影响的范围, 比如数据层、控制层、视图层等等, 视项目不同而不同   </span><br><span class="line"></span><br><span class="line">**1.3. subject**   </span><br><span class="line">subject 是 commit 目的的简短描述, 不超过50个字符以动词开头, 使用第一人称现在时, 比如 change, 而不是 changed 或 changes 第一个字母小写, 结尾不加句号`.`</span><br><span class="line"></span><br><span class="line"><span class="comment">#### 2. Body</span></span><br><span class="line">Body 部分是对本次 commit 的详细描述, 可以分成多行. 下面是一个范例   </span><br><span class="line">```git</span><br><span class="line">More detailed explanatory text, <span class="keyword">if</span> necessary.  Wrap it to about 72 characters or so.</span><br><span class="line">Further paragraphs come after blank lines.</span><br><span class="line">- Bullet points are okay, too</span><br><span class="line">- Use a hanging indent</span><br></pre></td></tr></table></figure></p>
+<p>有两个注意点:</p>
+<ol>
+<li>使用第一人称现在时, 比如使用 change, 而不是 changed 或 changes</li>
+<li>应该说明代码变动的动机, 以及与以前行为的对比   </li>
+</ol>
+<h4 id="3-Footer"><a href="#3-Footer" class="headerlink" title="3. Footer"></a>3. Footer</h4><p>Footer 部分只用于两种情况:</p>
+<p><strong>1. 不兼容变动</strong><br>如果当前代码与上一个版本不兼容, 则 Footer 部分以 BREAKING CHANGE 开头, 后面是对变动的描述、以及变动理由和迁移方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">BREAKING CHANGE: isolate scope bindings definition has changed. </span><br><span class="line"></span><br><span class="line">    To migrate the code follow the example below:    </span><br><span class="line">    Before:    </span><br><span class="line">    scope: &#123;    </span><br><span class="line">      myAttr: &apos;attribute&apos;,    </span><br><span class="line">    &#125;    </span><br><span class="line">    After:    </span><br><span class="line">    scope: &#123;    </span><br><span class="line">      myAttr: &apos;@&apos;,    </span><br><span class="line">    &#125;    </span><br><span class="line">    The removed `inject` wasn&apos;t generaly useful for directives so there should be no code using it.</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 关闭 Issue</strong><br>如果当前 commit 针对某个issue, 那么可以在 Footer 部分关闭这个 issue<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Closes <span class="comment">#234</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以一次关闭多个 issue<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Closes <span class="comment">#123, #245, #992</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="4-Revert"><a href="#4-Revert" class="headerlink" title="4. Revert"></a>4. Revert</h4><p>还有一种特殊情况, 如果当前 commit 用于撤销以前的 commit, 则必须以<code>revert:</code>开头, 后面跟着被撤销 Commit 的 Header   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">revert: feat(pencil): add &apos;graphiteWidth&apos; option</span><br><span class="line">This reverts commit 667ecc1654a317a13331b17617d973392f415f02.</span><br></pre></td></tr></table></figure>
+<p>Body 部分的格式是固定的，必须写成 This reverts commit <hash>. 其中的 hash 是被撤销 commit 的 SHA 标识符   </hash></p>
+<p>如果当前 commit 与被撤销的 commit, 在同一个发布版(release)里面, 那么它们都不会出现在 Change log 里面. 如果两者在不同的发布, 那么当前commit, 会出现在 Change log 的 Reverts 小标题下面</p>
+<h3 id="三、Commitizen"><a href="#三、Commitizen" class="headerlink" title="三、Commitizen"></a>三、Commitizen</h3><p><a href="https://github.com/commitizen/cz-cli" target="_blank" rel="noopener">Commitizen</a> 是一个撰写合格 Commit message 的工具   </p>
+<p>安装命令如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g commitizen</span><br></pre></td></tr></table></figure></p>
+<p>然后, 在项目目录里, 运行下面的命令, 使其支持 Angular 的 Commit message 格式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ commitizen init cz-conventional-changelog --save --save-exact</span><br></pre></td></tr></table></figure></p>
+<p>安装了 Commitizen 以后, 凡是用到 git commit 命令, 一律改为使用 git cz .这时, 就会出现选项, 用来生成符合格式的 Commit message</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79ly1feb7u78fx2j315k0gqjuh.jpg" alt=""></p>
+<h3 id="四、validate-commit-msg"><a href="#四、validate-commit-msg" class="headerlink" title="四、validate-commit-msg"></a>四、validate-commit-msg</h3><p><a href="https://github.com/kentcdodds/validate-commit-msg" target="_blank" rel="noopener">validate-commit-msg</a> 用于检查 Node 项目的 Commit message 是否符合格式<br>它的安装是手动的. 首先, 拷贝下面这个<a href="https://github.com/kentcdodds/validate-commit-msg/blob/master/index.js" target="_blank" rel="noopener">JS文件</a>, 放入你的代码库. 文件名可以取为<code>validate-commit-msg.js</code><br>接着, 把这个脚本加入 Git 的 hook. 下面是在 package.json 里面使用 <a href="http://npm.im/ghooks" target="_blank" rel="noopener">ghooks</a>, 把这个脚本加为 commit-msg 时运行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">"config": &#123;  </span><br><span class="line">  "ghooks": &#123;</span><br><span class="line">     "commit-msg": "./validate-commit-msg.js"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，每次 git commit 的时候，这个脚本就会自动检查 Commit message 是否合格. 如果不合格, 就会报错<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add -A </span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"edit markdown"</span> </span></span><br><span class="line">INVALID COMMIT MSG: does not match "&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;" ! was: edit markdown</span><br></pre></td></tr></table></figure></p>
+<h3 id="五、生成-Change-log"><a href="#五、生成-Change-log" class="headerlink" title="五、生成 Change log"></a><span id="changelog">五、生成 Change log</span></h3><p>如果你的所有 Commit 都符合 Angular 格式, 那么发布新版本时,  Change log 就可以用脚本自动生成(<a href="https://github.com/karma-runner/karma/blob/master/CHANGELOG.md" target="_blank" rel="noopener">例1</a>，<a href="https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md" target="_blank" rel="noopener">例2</a>)   </p>
+<p>生成的文档包括以下三个部分:</p>
+<ul>
+<li>New features</li>
+<li>Bug fixes</li>
+<li>Breaking changes</li>
+</ul>
+<p>每个部分都会罗列相关的 commit, 并且有指向这些 commit 的链接. 当然, 生成的文档允许手动修改, 所以发布前, 你还可以添加其他内容<br><a href="https://github.com/ajoslin/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a> 就是生成 Change log 的工具, 运行下面的命令即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g conventional-changelog</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> my-project</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> conventional-changelog -p angular -i CHANGELOG.md -w</span></span><br></pre></td></tr></table></figure></p>
+<p>上面命令不会覆盖以前的 Change log, 只会在 CHANGELOG.md 的头部加上自从上次发布以来的变动<br>如果你想生成所有发布的 Change log, 要改为运行下面的命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ conventional-changelog -p angular -i CHANGELOG.md -w -r 0</span><br></pre></td></tr></table></figure></p>
+<p>为了方便使用, 可以将其写入 package.json 的 scripts 字段<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;    </span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">     <span class="attr">"changelog"</span>: <span class="string">"conventional-changelog -p angular -i CHANGELOG.md -w -r 0"</span>  </span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以后, 直接运行下面的命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run changelog</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ONEOFAI
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://oneofai.com/2016/02/10/2016-02-10-Git 的正确使用姿势/" title="Git 的正确提交姿势">http://oneofai.com/2016/02/10/2016-02-10-Git 的正确使用姿势/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/13/2017-07-04-Mac-开发博客/" rel="next" title="一些著名和非著名的 iOS/Mac 开发博客">
+                <i class="fa fa-chevron-left"></i> 一些著名和非著名的 iOS/Mac 开发博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/11/2016-05-11-关于-nsrunloop-和-nstimer-的理解/" rel="prev" title="关于 NSRunLoop 和 NSTimer 的理解">
+                关于 NSRunLoop 和 NSTimer 的理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="ONEOFAI" />
+            
+              <p class="site-author-name" itemprop="name">ONEOFAI</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/oneofai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:holaux@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/oneofai" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/oneoai" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二、Commit-message-的格式"><span class="nav-number">1.</span> <span class="nav-text">二、Commit message 的格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Footer"><span class="nav-number">1.1.</span> <span class="nav-text">3. Footer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Revert"><span class="nav-number">1.2.</span> <span class="nav-text">4. Revert</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、Commitizen"><span class="nav-number">2.</span> <span class="nav-text">三、Commitizen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、validate-commit-msg"><span class="nav-number">3.</span> <span class="nav-text">四、validate-commit-msg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、生成-Change-log"><span class="nav-number">4.</span> <span class="nav-text">五、生成 Change log</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ONEOFAI</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'oneofai',
+            repo: 'oneofai.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bbdef2b6f5d285d081b0a8a09f85b76cf8a8201d',
+            
+                client_id: '131977bea9b841c7dc5c'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.0.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.0.1"></script>
+
+
+  
+
+</body>
+</html>

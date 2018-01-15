@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon180*180.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32*32.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16*16.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ONEOFAI, iOS, iOS开发" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="YG's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="纯属处理, 已让律师捏造">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://oneofai.com/about/index.html">
+<meta property="og:site_name" content="YG&#39;s Blog">
+<meta property="og:description" content="纯属处理, 已让律师捏造">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-15T16:45:59.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于我">
+<meta name="twitter:description" content="纯属处理, 已让律师捏造">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://oneofai.com/about/"/>
+
+
+
+
+
+  <title>iOS 逆向工程---ARM汇编 | YG's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YG's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oneofai.com/2016/09/28/2016-09-28-ios-逆向工程-arm汇编/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ONEOFAI">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YG's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">iOS 逆向工程---ARM汇编</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-28T00:03:10+08:00">2016-09-28</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS逆向/" itemprop="url" rel="index"><span itemprop="name">iOS逆向</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/09/28/2016-09-28-ios-逆向工程-arm汇编/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/09/28/2016-09-28-ios-逆向工程-arm汇编/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近看了念茜姐姐的 <a href="http://blog.csdn.net/yiyaaixuexi/article/category/1302847" target="_blank" rel="noopener">iOS 安全攻防</a> 系列, 对逆向产生了兴趣</p>
+<p>遂查了些资料, 这些资料中都涉及到 ARM 汇编, 但都只是很泛地用到, 并没有对 iOS 上的 ARM 汇编进行比较详细的讲解. 因此, 经过一系列的学习对 iOS 下的ARM有了一定的理解. 在此打算用几篇博文记录下来</p>
+<a id="more"></a> 
+<hr>
+<p>我们以ARMV7为例</p>
+<hr>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><blockquote>
+<p>首先介绍一下寄存器:</p>
+</blockquote>
+<p><strong>R0-R3</strong>: 用于函数参数及返回值的传递</p>
+<p><strong>R4-R6, R8, R10-R11</strong>: 没有特殊规定, 就是普通的通用寄存器</p>
+<p><strong>R7</strong>: 栈帧指针(Frame Pointer). 指向前一个保存的栈帧(stack frame)和链接寄存器(link register,  lr)在栈上的地址</p>
+<p><strong>R9</strong>: 操作系统保留</p>
+<p><strong>R12</strong>: IP(intra-procedure scratch ), 要说清楚要费点笔墨, 参见<a href="http://blog.csdn.net/gooogleman/article/details/3529413" target="_blank" rel="noopener">arm 中 r12 的用途</a></p>
+<p><strong>R13</strong>: SP(stack pointer), 是栈顶指针</p>
+<p><strong>R14</strong>: LR(link register), 存放函数的返回地址</p>
+<p><strong>R15</strong>: PC(program counter), 指向当前指令地址</p>
+<p><strong>CPSR</strong>: 当前程序状态寄存器(Current Program State Register), 在用户状态下存放像 condition 标志中断禁用等标志</p>
+<p><code>在其它系统状态中断状等状态下与 CPSR 对应还有一个 SPSR, 这里不详述</code></p>
+<p>另外还有VFP(向量浮点运算)相关的寄存器, 在此我们略过, 感兴趣的可以从后面的参考链接去查看</p>
+<blockquote>
+<p>基本的指令:</p>
+</blockquote>
+<ul>
+<li><p>add :加指令</p>
+</li>
+<li><p>sub :减指令</p>
+</li>
+<li><p>str :把寄存器内容存到栈上去</p>
+</li>
+<li><p>ldr  :把栈上内容载入一寄存器中</p>
+</li>
+<li><p>.w :是一个可选的指令宽度说明符. 它不会影响为此指令的行为, 它只是确保生成 32 位指令. 参见 <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0204ic/ch04s11s01.html" target="_blank" rel="noopener">指令宽度说明符：.W 和 .N</a></p>
+</li>
+<li><p>bl :执行函数调用, 并把使lr指向调用者(caller)的下一条指令, 即函数的返回地址</p>
+</li>
+<li><p>blx :同上, 但是在ARM和thumb指令集间切换</p>
+</li>
+<li><p>bx  :bx lr返回调用函数(caller)</p>
+</li>
+</ul>
+<blockquote>
+<p>函数调用的一些规则</p>
+</blockquote>
+<ol>
+<li><p>在 iOS 中你需要使用 BLX、 BX 这些指令来调用函数, 不能使用 MOV 指令(具体意义下面说)</p>
+</li>
+<li><p>ARM 使用一个栈来来维护函数的调用及返回. ARM 中栈是向下生长(由高地址向低地址生长的)</p>
+</li>
+</ol>
+<p>函数调用前后栈的布局如下图</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79ly1fedjryho8cj30f209mq3m.jpg" alt=""></p>
+<p>引用自 <a href="https://developer.apple.com/library/content/documentation/Xcode/Conceptual/iPhoneOSABIReference/Articles/ARMv6FunctionCallingConventions.html#//apple_ref/doc/uid/TP40009021-SW1" target="_blank" rel="noopener">iOS ABI Reference</a><br>　　　　　　　　　　　　　<br>SP(stack pointer)指向栈顶(栈低在高地址). 栈帧(stack frame)其实就是通过R7及存在栈上的旧R7来标识的栈上的一块一块的存储空间. 栈帧包括:</p>
+<ol>
+<li>参数区域(parameter area), 存放调用函数传递的参数. 对于32位ARM, 前4个参数通过r0-r3传递, 多余的参数通过栈来传递, 就是存放在这个区域的</li>
+<li>链接区域(linkage area), 存放调用者(caller)的下一条指令</li>
+<li>栈帧指针存放区域(saved frame pointer), 存放调用函数的栈帧的底部, 标识着调用者(caller)栈帧的结束及被调用函数(callee)的栈帧开始</li>
+<li>局部变量存储区(local storage area). 用于存被调函数(callee)的局部变量及在被调用函数(callee)结束后反回调用函数(call)之前需要恢复的寄存器内容</li>
+<li>寄存器存储区(saved registers area). Apple的文档中是这样说的. 但我认为这个区域和local storage area相邻且干的事也是存放需要恢复的寄存器内容, 因此我觉得要不就把这个区域在概念上不区分出来, 要不就把存放需要恢复的寄存器这项功能从local storage area中分出来.  当然这些都只是概念上的, 其实实质上是没有区别的</li>
+</ol>
+<blockquote>
+<p>接下来看看在调用子函数开始及结尾时所要做的事情. (官方叫序言和结语, prologs and epilogs)</p>
+</blockquote>
+<ul>
+<li><strong>调用开始:</strong></li>
+</ul>
+<ol>
+<li>LR入栈</li>
+<li>R7入栈</li>
+<li>R7 = SP地址. 在经过前面两条入栈指令后, SP指向的地址向下移动, 再把SP赋值给R7, 标志着caller栈帧的结束及callee的栈帧的开始</li>
+<li>将callee会修改且在返回caller时需要恢复的寄存器入栈</li>
+<li>分配栈空间给子程序使用. 由于栈是从高地址向低地址生长, 所以通常使用sub sp, #size来分配</li>
+</ol>
+<ul>
+<li><strong>调用结尾:</strong></li>
+</ul>
+<ol>
+<li>释放栈空间. add sp, #size指令</li>
+<li>恢复所保存的寄存器</li>
+<li>恢复R7</li>
+<li>将之前存放的LR从栈上弹出到PC, 这样函数就返回了</li>
+</ol>
+<hr>
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战 "></a>实战 <1></1></h2><p>用 Xcode 创建一个 Test 工程, 新建一个 <code>.c</code> 文件, 添加如下函数:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c, <span class="keyword">int</span> d, <span class="keyword">int</span> e, <span class="keyword">int</span> f)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> g = a + b + c + d + e + f;</span><br><span class="line">    <span class="keyword">return</span> g;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>注: 在Xcode左上角选中 targe 在真机下编译, 这样产生的才是ARM汇编, 不然在模拟器下生成的是 x86 汇编</code></p>
+<p>点击 Xcode =&gt; Product =&gt; Perform Action =&gt; Assemble filename.c 生成汇编代码</p>
+<p>代码很多, 有很多<code>.</code>开头的, 例如<code>.section</code>、 <code>.loc</code> 等, 这些是汇编器需要的, 我们不用去管. 把这些 <code>.</code> 开头的及注释增掉后, 代码如下:</p>
+<figure class="highlight as"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">_func:</span><br><span class="line">    .cfi_startproc</span><br><span class="line">Lfunc_begin0:</span><br><span class="line">    add r0, r1</span><br><span class="line">Ltmp0:</span><br><span class="line">    ldr.w   r12, [sp]</span><br><span class="line">    add r0, r2</span><br><span class="line">    ldr.w   r9, [sp, #4]</span><br><span class="line">    add r0, r3</span><br><span class="line">    add r0, r12</span><br><span class="line">    add r0, r9</span><br><span class="line">    bx  lr</span><br><span class="line">Ltmp2:</span><br><span class="line">Lfunc_end0:</span><br></pre></td></tr></table></figure>
+<p><code>_func</code>: 表示接下来是 func 函数的内容. <code>Lfunc_begin0</code> 及 <code>Lfunc_end0</code> 标识函数定义的起止. 函数起止一般是 <code>xxx_beginx:</code> 及 <code>xxx_endx:</code></p>
+<p><strong>下面来逐行解释:</strong></p>
+<ul>
+<li><code>add r0, r1</code> :将参数a和参数b相加再把结果赋值给r0</li>
+<li><code>ldr.w r12, [sp]</code> :把最的一个参数f从栈上装载到r12寄存器</li>
+<li><code>add r0, r2</code> :把参数c累加到r0上</li>
+<li><code>ldr.w r9, [sp, #4]</code> :把参数e从栈上装载到r9寄存器</li>
+<li><code>add r0, r3</code> :累加d累加到r0</li>
+<li><code>add r0, r12</code> :累加参数f到r0</li>
+<li><code>add r0, r9</code> :累加参数e到r0</li>
+</ul>
+<p>至此, 全部的 a 到 f 共6个值全部累加到 r0 寄存器上. 前面说了r0是存放返回值的</p>
+<p><code>bx lr</code>: 返回调用函数</p>
+<hr>
+<h2 id="实战-1"><a href="#实战-1" class="headerlink" title="实战 "></a>实战 <2></2></h2><p>为了让大家看清楚函数调用时栈上的变化, 下面有三个函数, 以两个C代码的汇编代码为例讲解一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">__attribute__((noinline))</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">addFunction</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c, <span class="keyword">int</span> d, <span class="keyword">int</span> e, <span class="keyword">int</span> f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r = a + b + c + d + e + f;</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__attribute__((noinline))</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fooFunction</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c, <span class="keyword">int</span> d, <span class="keyword">int</span> f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r = addFunction(a, b, c, d, f, <span class="number">66</span>);</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">initFunction</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r = fooFunction(<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>, <span class="number">55</span>);   </span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于我们是要看函数调用及栈的变化的, 所以在这里我们加上<strong>attribute</strong>((noinline))防止编译器把函数内联(如果你不懂内联, 请 Google 之)</p>
+<font color="red">不要忘记选真机编译!</font>   
+
+
+<p>点击 Xcode =&gt; Product =&gt; Perform Action =&gt; Assemble filename.c 生成汇编代码, 如下:</p>
+<p>为了能更符合我们人的思考方式, 我们从调用函数讲起.</p>
+<p>initFunction:</p>
+<figure class="highlight as"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">_initFunction:</span><br><span class="line">    .cfi_startproc</span><br><span class="line">Lfunc_begin2:</span><br><span class="line">@ BB#0:</span><br><span class="line">    push    &#123;r7, lr&#125;</span><br><span class="line">    mov r7, sp</span><br><span class="line">    sub sp, #4</span><br><span class="line">    movs    r0, #55</span><br><span class="line">    movs    r1, #22</span><br><span class="line">Ltmp6:</span><br><span class="line">    str r0, [sp]</span><br><span class="line">    movs    r0, #11</span><br><span class="line">    movs    r2, #33</span><br><span class="line">    movs    r3, #44</span><br><span class="line">    bl  _fooFunction</span><br><span class="line">    add sp, #4</span><br><span class="line">    pop &#123;r7, pc&#125;</span><br><span class="line">Ltmp7:</span><br><span class="line">Lfunc_end2:</span><br></pre></td></tr></table></figure>
+<p><strong>逐行解释:</strong></p>
+<ul>
+<li><code>push {r7, lr}</code> :就是前面基础知识部分说的函数调用的序言(prologs)部分的1,  2两条, 将lr, r7 存到栈上去</li>
+<li><code>mov r7, sp</code> :序言(prolog)之3</li>
+<li><code>sub sp, #4</code> :在栈上分配一个4字节空间用来存放局部变量, 即参数. 前面我们说过, r0-r3可以传递4个参数, 但超过的只能通过栈来传递</li>
+<li><code>movs r0, #55</code> :把立即数55存入r0</li>
+<li><code>movs r1, #22</code> :把22存入r1</li>
+<li><code>str r0, [sp]</code> :把r0的值存入栈指针sp指向的内存. 即栈上存了参数55</li>
+<li><code>moves r0, #11</code>、<code>moves r2, #33</code>、<code>moves r3, #44</code> :把相应的立即数存入指定的寄存器. 到目前为止, r0-r3分别存放了11, 22, 33,44共4个立即数参数, 栈上存放了55这一个参数</li>
+<li><code>bl _fooFunction</code> :调用fooFunction, 调用后跳转到fooFunction中的情况下面再分析</li>
+<li><code>add sp, #4</code> :栈指针向上移动4个字节, 回收第3个指令 sub sp, #4分配的空间</li>
+<li><code>pop {r7, pc}</code> :恢复第一条指令 push {r7, lr} 到栈中的值, 把之前的lr值赋给pc<ul>
+<li>注意: 在进入 initFunction 的时候lr是调用 initFunction 的函数的下一条指令, 所以现在把当时的lr中的值赋给pc程序计数器, 这样执行lr指向的这一条指令, 函数就反回了</li>
+</ul>
+</li>
+</ul>
+<p>指令1, 2,  3是函数序言(prologs), 指令9, 10是结语(epilogs). 这基本上是一个套路, 看多了自然就知道了, 都不用停下来一条条分析</p>
+<p>为了方便和栈的变化联系起来, 我们画出指令8,  <code>bl __fooFunction</code>时的栈布局如下图</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79ly1fedkzxsr2wj30ac0880t1.jpg" alt=""></p>
+<p>在上面的 <code>initFunction</code> 调用第8条指令 <code>bl _fooFunction</code> 之后, 进入 <code>fooFunction</code>, 其它汇编如下:</p>
+<p>fooFunction:<br><figure class="highlight as"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">_fooFunction:</span><br><span class="line">    .cfi_startproc</span><br><span class="line">Lfunc_begin1:</span><br><span class="line">    push    &#123;r4, r5, r7, lr&#125;</span><br><span class="line">    add r7, sp, #8</span><br><span class="line">    sub sp, #8</span><br><span class="line">    ldr r4, [r7, #8]</span><br><span class="line">    movs    r5, #66</span><br><span class="line">    strd    r4, r5, [sp]</span><br><span class="line">    bl  _addFunction</span><br><span class="line">    add sp, #8</span><br><span class="line">    pop &#123;r4, r5, r7, pc&#125;</span><br><span class="line">Lfunc_end1:</span><br></pre></td></tr></table></figure></p>
+<p><strong>同样, 我们一行行来看:</strong></p>
+<ul>
+<li><code>push {r4, r5, r7, lr}</code> :你应该发现了, 这次和 initFunction 不同, 除了lr和r7也把r4, r5 push到栈上去了, 这是因为我们下面会用到r4, r5, 所以我们先把r4,r5存到栈上, 这样我们在退出fooFunction返回initFunction的时候好恢复r4, r5的值. push到栈上的顺序是lr, r7, r4, r5</li>
+<li><code>add r7, sp, #8</code> : 在 initFunction 中我们没有 push r4, r5所以sp指向的位置正好是新的r7的值, 但是这里我们把r4, r5也push到栈上了, 现在sp指向栈上的r4的位置, 而栈是向下生长的, 所以我们把sp + #8个字节就是存放旧r7的位置</li>
+<li><code>sub sp, #8</code> :在栈上分配8个字节</li>
+<li><code>ldr r4, [r7, #8]</code> :r7加8个字节, 在栈上的位置正好是在initFunction中我们存放的参数55的位置. 因此, 这里是把55赋值给r4</li>
+<li><code>movs  r5, #66</code> : 立即数赋值, 不解释了</li>
+<li><code>strd r4, r5, [sp]</code> : 把r4, r5中的值存到栈上. 我们在initFunction中已经把11, 22, 33, 44这4个参数存放到了r0-r3, 现在55, 66我们存放在栈上</li>
+<li><code>bl _addFunction</code> :参数已经准备好了, 因此现在调用addFunction</li>
+<li><code>add sp, #8</code> :回收栈空间</li>
+<li><code>pop {r4, r5, r7, pc}</code> :这最后两条指令和 initFunction类似, 只是多了个恢复r4,r5. 不过也是一个指令就完事</li>
+</ul>
+<p>在指令<code>bl _addFunction</code> 调用 <code>addFunction</code> 后, 栈的布局如下图</p>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79ly1fedl5uolatj30d40e0js5.jpg" alt=""></p>
+<p>上面的 <code>fooFunction</code> 第7条指令 <code>bl _addFunction</code> 之后, 进入 <code>addFunction</code>. 汇编代码如下:</p>
+<p>addFunction:<br><figure class="highlight as"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">_addFunction:</span><br><span class="line">    .cfi_startproc</span><br><span class="line">Lfunc_begin0:</span><br><span class="line">    add r0, r1</span><br><span class="line">    ldr.w   r12, [sp]</span><br><span class="line">    add r0, r2</span><br><span class="line">    ldr.w   r9, [sp, #4]</span><br><span class="line">    add r0, r3</span><br><span class="line">    add r0, r12</span><br><span class="line">    add r0, r9</span><br><span class="line">    bx  lr</span><br><span class="line">Lfunc_end0:</span><br></pre></td></tr></table></figure></p>
+<p><strong>逐行解释:</strong></p>
+<ul>
+<li><code>add r0, r1</code>: r0 += r1</li>
+<li><code>ldr.w r12, [sp]</code> :把sp指向的内容load到r12寄存器. 从上图我们知道sp指向66,因此r12存的66</li>
+<li><code>add r0, r2</code> :r0 += r2</li>
+<li><code>ldr.w r9, [sp, #4]</code> :从上图 sp加4个字节存的是55, r9存的55</li>
+<li><code>add r0, r3</code> :r0 += r3</li>
+<li><code>add r0, r12</code> :r0 += r12</li>
+<li><code>add r0, r9</code> :r0 += r9. 至此r0-r4存的11,22,33,44,及栈上存的55,66想加存到了r0上</li>
+<li><code>bx lr</code> :返回</li>
+</ul>
+<p>大家应该有注意到因为 <code>addFunction</code> 没有调用其它的函数, 序言和结语与 <code>initFunction</code> 和 <code>fooFunction</code> 不一样. 因为我们不调用其它函数, 就不会有<code>bl</code>, <code>blx</code>这样的指令, 所以不会 <code>bx lr</code>, 所以我们没有push lr  </p>
+<hr>
+<p>在这里我们用了r9,  r12, 为什么不需要保存与恢复?</p>
+<p><a href="https://developer.apple.com/library/content/documentation/Xcode/Conceptual/iPhoneOSABIReference/Articles/ARMv6FunctionCallingConventions.html#//apple_ref/doc/uid/TP40009021-SW1" target="_blank" rel="noopener">iOS ABI Reference</a> 里是这样说的:</p>
+<p>关于R9</p>
+<blockquote>
+<p>In iOS 2.x, register R9 is reserved for operating system use and must not be used by application code. Failure to do so can result in application crashes or aberrant behavior. However, in iOS 3.0 and later, register R9 can be used as a volatile scratch register. These guidelines differ from the general usage provided for by the AAPCS document.  </p>
+</blockquote>
+<p>关于R12</p>
+<blockquote>
+<p>R12 is the intra-procedure scratch register, also known as IP. It is used by the dynamic linker and is volatile across all function calls. However, it can be used as a scratch register between function calls.</p>
+</blockquote>
+<hr>
+<p>参考:<br><a href="http://infocenter.arm.com/help/topic/com.arm.doc.qrc0001l/QRC0001_UAL.pdf" target="_blank" rel="noopener">ARM® and Thumb®-2 Instruction Set<br>Quick Reference Card</a></p>
+<p><a href="http://simplemachines.it/doc/arm_inst.pdf" target="_blank" rel="noopener">The ARM Instruction Set</a></p>
+<p><a href="https://developer.apple.com/library/content/documentation/Xcode/Conceptual/iPhoneOSABIReference/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009020-SW1" target="_blank" rel="noopener">iOS ABI Reference</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ONEOFAI
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://oneofai.com/2016/09/28/2016-09-28-ios-逆向工程-arm汇编/" title="iOS 逆向工程---ARM汇编">http://oneofai.com/2016/09/28/2016-09-28-ios-逆向工程-arm汇编/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-逆向/" rel="tag"># iOS 逆向</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/11/2016-05-11-关于-nsrunloop-和-nstimer-的理解/" rel="next" title="关于 NSRunLoop 和 NSTimer 的理解">
+                <i class="fa fa-chevron-left"></i> 关于 NSRunLoop 和 NSTimer 的理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/02/2016-10-02-ios-逆向工程-静态分析/" rel="prev" title="iOS 逆向工程---静态分析">
+                iOS 逆向工程---静态分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="ONEOFAI" />
+            
+              <p class="site-author-name" itemprop="name">ONEOFAI</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/oneofai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:holaux@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/oneofai" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/oneoai" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战"><span class="nav-number">2.</span> <span class="nav-text">实战 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战-1"><span class="nav-number">3.</span> <span class="nav-text">实战 </span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ONEOFAI</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'oneofai',
+            repo: 'oneofai.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bbdef2b6f5d285d081b0a8a09f85b76cf8a8201d',
+            
+                client_id: '131977bea9b841c7dc5c'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.0.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.0.1"></script>
+
+
+  
+
+</body>
+</html>

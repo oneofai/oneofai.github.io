@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon180*180.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32*32.png?v=6.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16*16.png?v=6.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.1" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ONEOFAI, iOS, iOS开发" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="YG's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="纯属处理, 已让律师捏造">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://oneofai.com/about/index.html">
+<meta property="og:site_name" content="YG&#39;s Blog">
+<meta property="og:description" content="纯属处理, 已让律师捏造">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-15T16:45:59.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于我">
+<meta name="twitter:description" content="纯属处理, 已让律师捏造">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://oneofai.com/about/"/>
+
+
+
+
+
+  <title>Cocoa 是什么 | YG's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YG's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oneofai.com/2014/10/13/2014-10-13-cocoa-是什么/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ONEOFAI">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YG's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Cocoa 是什么</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-10-13T16:48:22+08:00">2014-10-13</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS-开发/" itemprop="url" rel="index"><span itemprop="name">iOS 开发</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/10/13/2014-10-13-cocoa-是什么/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2014/10/13/2014-10-13-cocoa-是什么/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、什么是Cocoa"><a href="#一、什么是Cocoa" class="headerlink" title="一、什么是Cocoa"></a>一、什么是Cocoa</h2><h4 id="1-Cocoa-来源"><a href="#1-Cocoa-来源" class="headerlink" title="1. Cocoa 来源"></a>1. Cocoa 来源</h4><a id="more"></a> 
+<p>1996年, <a href="https://en.wikipedia.org/wiki/Gil_Amelio" target="_blank" rel="noopener">Gil Amelio</a> 掌权的Apple正在开发 <a href="https://en.wikipedia.org/wiki/Copland_(operating_system" target="_blank" rel="noopener">Copland</a>) 操作系统, 这是 Apple 历史上最烂的产品之一. 被 Gil Amelio 雇进来的女英雄 <a href="https://en.wikipedia.org/wiki/Ellen_Hancock" target="_blank" rel="noopener">Ellen Handcock</a> 在同年8月果断放弃了 Copland, 转向从别的公司购买下一个版本的 Mac OS. 在经过调查现存的操作系统之后, Apple 公司选择了 <a href="https://en.wikipedia.org/wiki/NeXTSTEP" target="_blank" rel="noopener">NeXTSTEP</a>, 因为 NeXTSTEP很小, Apple 在1996年整个收购了 NeXT</p>
+<p>NeXTSTEP 内置许多库和工具, 能让程序员以一种优雅的方式与窗口管理器进行交互, 这些库叫 Framework, 在1993年, NeXT 公司和 Sun 公司合作把这些 Frameworks 和工具重新修改并重命名为 OpenStep, 后来 NeXT 被 Apple 收购以后, OpenStep 被重命名为 Cocoa, 这也是为什么 Cocoa 的类都有着 NS 的前缀</p>
+<hr>
+<h4 id="2-何为-Cocoa"><a href="#2-何为-Cocoa" class="headerlink" title="2. 何为 Cocoa"></a>2. 何为 Cocoa</h4><p>Cocoa（iOS上叫 Cocoa Touch）是一个面向对象的软件组件——类的集成套件, 它使开发者可以快速创建健壮和全功能的 Mac OS X （iOS）应用程序</p>
+<p>Cocoa 包含了很多框架, 其中最最核心的有两个:<br>（1）Foundation 框架</p>
+<blockquote>
+<p>Foundation 框架包含所有和界面显示无关的类</p>
+</blockquote>
+<p>（2）Application Kit（AppKit）框架（Cocoa Touch 中叫 UIKit 框架）</p>
+<blockquote>
+<p>Application Kit 框架包含实现图形的、事件驱动的用户界面需要的所有对象: 窗口、对话框、按键、菜单、 滚动条、文本输入框——这个列表还在不断增加</p>
+</blockquote>
+<p>Foundation 和 Application Kit (UIKit)框架在 Cocoa 开发中是必要的框架, 其它框架则是辅助和可选(当然也可以只用 Foundation 框架创建一个 Cocoa 程序, 而不涉及其它框架, 比如令行工具和 Internet 服务器). 和所有框架一样, 这两个框架不仅包含动态共享库(有时是几个兼容版本的库), 还包含头文件、API文档、和相关的资源   </p>
+<p>除了这两个最核心的, Cocoa（Cocoa Touch）还有很多其他的框架, Apple 和第三方厂商也随时会发布更多的框架, 比如 Cocoa Touch 的Address Book UI框架（AddressBookUI.framework）、Game Kit框架（GameKit.framework）等等, 在开发 Cocoa 程序的时候可以按照自己的实际需求添加这些框架</p>
+<h2 id="二、Cocoa在-Mac-OS-X-中的位置"><a href="#二、Cocoa在-Mac-OS-X-中的位置" class="headerlink" title="二、Cocoa在 Mac OS X 中的位置"></a>二、Cocoa在 Mac OS X 中的位置</h2><h4 id="1-Cocoa-在整个-Mac-OS-X-架构中的位置"><a href="#1-Cocoa-在整个-Mac-OS-X-架构中的位置" class="headerlink" title="1. Cocoa 在整个 Mac OS X 架构中的位置"></a>1. Cocoa 在整个 Mac OS X 架构中的位置</h4><p><img src="https://developer.apple.com/legacy/library/documentation/Cocoa/Conceptual/CocoaFundamentals/Art/osx_architecture.jpg" alt="OS X"><br>上图可以看出：   </p>
+<blockquote>
+<p>（1）还有两个和 Cocoa 级别相同的开发框架：<a href="https://en.wikipedia.org/wiki/Carbon_(API" target="_blank" rel="noopener">Carbon</a>), <a href="https://en.wikipedia.org/wiki/Java_Development_Kit" target="_blank" rel="noopener">Java</a><br>（2）Cocoa 位于整个架构的顶端, 其下还依赖很多别的框架</p>
+</blockquote>
+<p>虽然 Cocoa 依赖于特定的框架, 但它并不是仅仅“坐”在这些框架的上面. 在某些情况下, Cocoa 和其它框架(比如 Carbon)是对等的, 甚至可以实现一些其它对等框架不能实现的任务. Cocoa 不仅仅是基础技术上面的一个面向对象的封装层</p>
+<h4 id="2-另一种层级划分方式"><a href="#2-另一种层级划分方式" class="headerlink" title="2. 另一种层级划分方式"></a>2. 另一种层级划分方式</h4><p><img src="https://developer.apple.com/legacy/library/documentation/Cocoa/Conceptual/CocoaFundamentals/Art/architecture_stack.jpg" alt="OS X"><br>上图把Mac OS X的架构分了四个部分:    </p>
+<blockquote>
+<p>（1）User Experience, 这个一般可以理解为 Application<br>（2）Application Frameworks, 这个理解为主要包括像 Cocoa 这样的组件<br>（3）Graphics and Media, 这个理解为 Application Service 和 Core Service<br>（4）Darwin, 这个就是 Mac OS X 的 kernel   </p>
+</blockquote>
+<h4 id="3-Cocoa-和其它架构的依赖关系"><a href="#3-Cocoa-和其它架构的依赖关系" class="headerlink" title="3. Cocoa 和其它架构的依赖关系"></a>3. Cocoa 和其它架构的依赖关系</h4><p><img src="https://ww1.sinaimg.cn/large/006tNc79ly1febam359ckj30bm05h74t.jpg" alt=""></p>
+<p>Cocoa 依赖的、或者通过类和方法为之提供访问通道的主要基础框架有 Core Foundation, Carbon, Core Graphics (Quartz), Launch Services, 和 Print Core (打印子系统). 详细信息如下:    </p>
+<p><strong>（1）Core Foundation</strong></p>
+<p>Foundation 框架的很多类都基于 Core Foundation 中对应的封装类型. 它们之间的这种紧密关系使“无损桥接”技术——即在兼容的 Core Foundation 和 Foundation 类型之间实现类型转换——成为可能. 某些 Core Foundation 的实现又基于 Darwin 层的 BSD 部分</p>
+<p><strong>（2）Carbon</strong></p>
+<p>Cocoa 使用了 Carbon 提供的某些服务, 因为有些 Carbon 框架在 Core Services 和 Application Services 层中定位为系统级别的服务. 作为例子, Carbon Core 就是这些框架中特别重要的一个, Cocoa 使用了它提供的 File Manager(文件管理器)组件来进行不同文件系统表示之间的转换</p>
+<p><strong>（3）Core Graphics</strong></p>
+<p>Cocoa 绘制和图像处理类(相当自然且紧密地)基于 Core Graphics 框架, 它实现了 Quartz 和窗口服务器组件    </p>
+<p>Launch Services 这个 NSWorkspace 类负责向外提供 Launch Services 的潜在能力. Cocoa 还使用 Launch Services 提供的应用程序注册功能来获取与应用程序及文档相关联的图标   </p>
+<p><strong>（4）Print Core</strong></p>
+<p>Cocoa 的打印类是打印子系统的一个面向对象的接口</p>
+<p>此外, Cocoa 还使用 Carbon 环境的 Text Encoding Converter(文本编码转换器)服务来处理一些字符串编码转换. 还有一些 Cocoa 方法向外提供 I/O Kit 框架、QuickDraw (QD)框架、 Apple Event (AE)框架、 和 ATS 框架的部分功能, 分别用于进行电源管理、QuickDraw 描画、 Apple Event 处理、以及提供字体 支持</p>
+<h2 id="三、Cocoa-程序不止能通过-Objective-C-语言编写"><a href="#三、Cocoa-程序不止能通过-Objective-C-语言编写" class="headerlink" title="三、Cocoa 程序不止能通过 Objective-C 语言编写"></a>三、Cocoa 程序不止能通过 Objective-C 语言编写</h2><p>在开发 Cocoa 软件的时候, 可以使用多种编程语言. 基本, 也是官方推荐的语言是 Objective-C. OC 拥有自己 的 Cocoa 运行环境, 又是 ANSI C 的超集, 它在 ANSI C 的语法和语义特性上(从 Smalltalk 派生而来)进行扩展, 使之支持面向对象的编程, 新增的规则简单而又易于学习和使用. 由于 Objective-C 是基于 ANSI C 的, 可以自由地将 C 代码直接和 Objective-C 代码混合在一起. 而且代码可以调用非 Cocoa 的编程接口中定义的所有函数, 比如 Carbon 和 BSD. 甚至可以将 C++ 代码混合到 Cocoa 代码中, 并将它们链接在同一个执行文件中   </p>
+<p>同时Cocoa 还支持 Java, Cocoa 为此定义了一个平行的 Java 类库, 并且实现 了一个将 Java 接口映射到 Objective-C 实现的桥机制. Cocoa 的 Java 支持使开发者可以将本地的 Java 对象 和 Cocoa 对象混合在一起使用(在某些限制下).甚至可以用PyObjC, 即 Python/Objective-C 桥来进行 Cocoa 编程. Python 是一种解释性的、注重交互的、及面向对象的编程语言. PyObjC 使 Python 对象可以向 Objective-C 对象传递消息, 就象传递给 Python 对象一样; 同时还使 Objective-C 对象可以向 Python 对象传递消息</p>
+<h2 id="四、如何判断一个程序是不是-Cocoa-程序"><a href="#四、如何判断一个程序是不是-Cocoa-程序" class="headerlink" title="四、如何判断一个程序是不是 Cocoa 程序"></a>四、如何判断一个程序是不是 Cocoa 程序</h2><p>是什么因素使一个程序成为 Cocoa 程序? 肯定不是编程语言, 因为在 Cocoa 开发中可以使用各种语言; 也不是开发工具, 因为在命令行上就可以创建 Cocoa 程序(虽然那会使开发过程变得复杂, 且需要消耗大量时间). 那么, 所有 Cocoa 程序的共同点是什么? 是什么使它们变得与众不同?   </p>
+<blockquote>
+<p>因为这些程序都是由一些对象组成, 而这些对象最终都是从 NSObject 这个根类继承下来的; 还有, 这些程序都是基于 Objective-C 运行时（runtime system）环境的</p>
+</blockquote>
+<p>上面的说法还需要做一点限制:   </p>
+<blockquote>
+<p>首先, Cocoa 还有另一个根类, 即 NSProxy. 只是 NSProxy 很少用于 Cocoa 编程. 其次, 开发者可以创建自己的根类, 需要很多时间（包括编写与 Objective-C 运行时环境进行交互的代码）, 但这是可以的做到的</p>
+</blockquote>
+<h2 id="五、除了-Cocoa-外是否还可以使用其它框架开发-Mac-OS-X-iOS-程序"><a href="#五、除了-Cocoa-外是否还可以使用其它框架开发-Mac-OS-X-iOS-程序" class="headerlink" title="五、除了 Cocoa 外是否还可以使用其它框架开发 Mac OS X (iOS)程序"></a>五、除了 Cocoa 外是否还可以使用其它框架开发 Mac OS X (iOS)程序</h2><p>可以. 跟Cocoa处于同一级别的还有另外两个开发框架: Carbon 和 Java. 可以使用 Xcode 利用 Carbon 模版和 JDK 来进行程序开发. 只不过由于 Cocoa 的各种优点, Apple 并不推荐使用它们来进行开发工作, Carbon 模版在iOS SDK 3.1之后的 Xcode 都不再提供了, JDK的API也不再更新</p>
+<p>参考:<br><a href="https://developer.apple.com/legacy/library/documentation/Cocoa/Conceptual/CocoaFundamentals/WhatIsCocoa/WhatIsCocoa.html#//apple_ref/doc/uid/TP40002974-CH3-SW16" target="_blank" rel="noopener">Cocoa Fundamentals Guide</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    ONEOFAI
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://oneofai.com/2014/10/13/2014-10-13-cocoa-是什么/" title="Cocoa 是什么">http://oneofai.com/2014/10/13/2014-10-13-cocoa-是什么/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-开发/" rel="tag"># iOS 开发</a>
+          
+            <a href="/tags/Cocoa/" rel="tag"># Cocoa</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/09/2014-09-09-oc-中-forin-和-for-循环的区别/" rel="next" title="OC 中 for-in 和 for 循环的区别">
+                <i class="fa fa-chevron-left"></i> OC 中 for-in 和 for 循环的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/10/15/2014-10-15-cocoa-与-cocoa-touch-的区别/" rel="prev" title="Cocoa 与 Cocoa Touch 的区别">
+                Cocoa 与 Cocoa Touch 的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="ONEOFAI" />
+            
+              <p class="site-author-name" itemprop="name">ONEOFAI</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/oneofai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:holaux@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/oneofai" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/oneoai" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、什么是Cocoa"><span class="nav-number">1.</span> <span class="nav-text">一、什么是Cocoa</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Cocoa-来源"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. Cocoa 来源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-何为-Cocoa"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. 何为 Cocoa</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Cocoa在-Mac-OS-X-中的位置"><span class="nav-number">2.</span> <span class="nav-text">二、Cocoa在 Mac OS X 中的位置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Cocoa-在整个-Mac-OS-X-架构中的位置"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. Cocoa 在整个 Mac OS X 架构中的位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-另一种层级划分方式"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 另一种层级划分方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Cocoa-和其它架构的依赖关系"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. Cocoa 和其它架构的依赖关系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Cocoa-程序不止能通过-Objective-C-语言编写"><span class="nav-number">3.</span> <span class="nav-text">三、Cocoa 程序不止能通过 Objective-C 语言编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、如何判断一个程序是不是-Cocoa-程序"><span class="nav-number">4.</span> <span class="nav-text">四、如何判断一个程序是不是 Cocoa 程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、除了-Cocoa-外是否还可以使用其它框架开发-Mac-OS-X-iOS-程序"><span class="nav-number">5.</span> <span class="nav-text">五、除了 Cocoa 外是否还可以使用其它框架开发 Mac OS X (iOS)程序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ONEOFAI</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.1"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'oneofai',
+            repo: 'oneofai.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bbdef2b6f5d285d081b0a8a09f85b76cf8a8201d',
+            
+                client_id: '131977bea9b841c7dc5c'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.0.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.0.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.0.1"></script>
+
+
+  
+
+</body>
+</html>
